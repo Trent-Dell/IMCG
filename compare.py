@@ -64,6 +64,11 @@ df_IMCG["In_GNS?"] = np.where(df_GNS['PARTTYPE'] == df_IMCG['PARTTYPE'], 'True',
 
 df_IMCG['PARTTYPE'].isin(df_GNS['PARTTYPE']).value_counts()
 # %%
-df_GNS.dtypes
+mergedStuff = pd.merge(df_GNS, df_IMCG, on=['PARTTYPE'], how='inner')
+mergedStuff
+
+# %%
+# df['your_column_name'].isin(df2['your_column_name']).value_counts()
+df_GNS['PARTTYPE'].isin(df_IMCG['PARTTYPE']).value_counts()
 
 # %%
