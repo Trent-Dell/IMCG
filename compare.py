@@ -21,6 +21,14 @@ df_GNS = pd.read_csv(GNS_load)
 df_IMCG
 
 #%%
+# cleaning IMCG DF
+# df.rename(columns={"A": "a", "B": "c"})
+df_IMCG = df_IMCG.columns.str.replace(' ','')
+df_IMCG
+df_GNS = df_GNS.columns.str.replace(' ','')
+df_GNS
+
+#%%
 ImcgNotNull = df_IMCG.notnull().sum()
 ImcgIsNull = df_IMCG.isnull().sum()
 print(
@@ -37,3 +45,9 @@ print(
     f"{GnsIsNull}\n\n"
     f"Data Types:/n  {df_GNS.dtypes}"
     )
+
+# %%
+# df[df.string1==df.string2]
+df_IMCG["In_GNS?"] = np.where(df_GNS['PARTTYPE'] == df_IMCG['PARTTYPE'], 'True', 'False')
+
+# %%
