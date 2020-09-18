@@ -21,7 +21,19 @@ df_GNS = pd.read_csv(GNS_load)
 df_IMCG
 
 #%%
-
+ImcgNotNull = df_IMCG.notnull().sum()
+ImcgIsNull = df_IMCG.isnull().sum()
+print(
+    f"{ImcgNotNull}\n\n"
+    f"{ImcgIsNull}\n\n"
+    f"Data Types:\n{df_IMCG.dtypes}"
+    )
 
 #%%
-
+GnsNotNull = df_GNS.notnull().sum()
+GnsIsNull = df_GNS.isnull().sum()
+print(
+    f"{GnsNotNull}\n\n"
+    f"{GnsIsNull}\n\n"
+    f"Data Types:/n  {df_GNS.dtypes}"
+    )
