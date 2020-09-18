@@ -29,6 +29,7 @@ print(
     f"{df_GNS.head()}/n/n"
     f"{df_IMCG.head()}"
     )
+
 #%%
 ImcgNotNull = df_IMCG.notnull().sum()
 ImcgIsNull = df_IMCG.isnull().sum()
@@ -59,16 +60,30 @@ print(
 # df[df.string1==df.string2]
 df_IMCG["In_GNS?"] = np.where(df_GNS['PARTTYPE'] == df_IMCG['PARTTYPE'], 'True', 'False')
 
-# %%
-# df['your_column_name'].isin(df2['your_column_name']).value_counts()
+#%%
+# Applying upper() method on 'PARTTYPE' column in GNS table
 
+df_GNS['PARTTYPE'] = df_GNS['PARTTYPE'].apply(lambda x: x.upper())
+df_GNS
+
+#%%
+# compare tables
 df_IMCG['PARTTYPE'].isin(df_GNS['PARTTYPE']).value_counts()
+
 # %%
 mergedStuff = pd.merge(df_GNS, df_IMCG, on=['PARTTYPE'], how='inner')
 mergedStuff
 
 # %%
-# df['your_column_name'].isin(df2['your_column_name']).value_counts()
+# comparing Part Type columns of truth tables
 df_GNS['PARTTYPE'].isin(df_IMCG['PARTTYPE']).value_counts()
 
+# %%
+outerMerge = pd.merge(df_GNS, df_IMCG, on=['PARTTYPE'], how='outer')
+outerMerge
+outerMerge.to_csv('data\gns_imcg_fullJoin.csv')
+
+
+# %%
+# write outer merge to csv
 # %%
