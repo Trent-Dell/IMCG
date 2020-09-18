@@ -22,19 +22,20 @@ df_IMCG
 
 #%%
 # cleaning IMCG DF
-# df.rename(columns={"A": "a", "B": "c"})
-df_IMCG.columns.str.replace(' ','')
+df_IMCG.columns = df_IMCG.columns.str.replace(' ','')
 df_IMCG
-# df_GNS = df_GNS.columns.str.replace(' ','')
-# df_GNS
-
+df_GNS.columns = df_GNS.columns.str.replace(' ','')
+print(
+    f"{df_GNS.head()}/n/n"
+    f"{df_IMCG.head()}"
+    )
 #%%
 ImcgNotNull = df_IMCG.notnull().sum()
 ImcgIsNull = df_IMCG.isnull().sum()
 print(
     f"{ImcgNotNull}\n\n"
     f"{ImcgIsNull}\n\n"
-    # f"Data Types:\n{df_IMCG.dtypes}"
+    f"Data Types:\n{df_IMCG.dtypes}"
     )
 
 #%%
@@ -44,6 +45,14 @@ print(
     f"{GnsNotNull}\n\n"
     f"{GnsIsNull}\n\n"
     f"Data Types:/n  {df_GNS.dtypes}"
+    )
+#%%
+ImcgNotNull = df_IMCG.notnull().sum()
+ImcgIsNull = df_IMCG.isnull().sum()
+print(
+    f"{ImcgNotNull}\n\n"
+    f"{ImcgIsNull}\n\n"
+    f"Data Types:/n  {df_IMCG.dtypes}"
     )
 
 # %%
