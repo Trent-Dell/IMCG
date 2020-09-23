@@ -28,5 +28,21 @@ print(
     f"{IMCG_df.head()}/n/n"
     f"{attr_df.head()}"
     )
-    
+
 # %%
+NewNotNull = attr_df.notnull().sum()
+NewIsNull = attr_df.isnull().sum()
+
+IMCGnotNull = IMCG_df.notnull().sum()
+IMCGisNull = IMCG_df.isnull().sum()
+
+print(
+    f"{NewNotNull}\n\n"
+    f"{NewIsNull}\n\n"
+    f"New Attribute data types:\n{attr_df.dtypes}\n\n"
+    f"{IMCGnotNull}\n\n"
+    f"{IMCGisNull}\n\n"
+    f"IMCG Data types:\n{IMCG_df.dtypes}\n"
+    )
+
+#%%
