@@ -46,3 +46,55 @@ print(
     )
 
 #%%
+# compare Part Type values in tables
+IMCG_df["In Agile?"] = np.where(attr_df['PARTTYPE'] == IMCG_df['PARTTYPE'])
+IMCG_df
+
+#%%
+# Applying upper() method on 'PARTTYPE' column in GNS table
+
+attr_df['PARTTYPE'] = attr_df['PARTTYPE'].apply(lambda x: x.upper())
+
+# ignore case
+# df2 = attr_df['PARTTYPE'].str.contains(IMCG_df['PARTTYPE'], case=False)
+
+# comparing Part Type columns of truth tables
+IMCG_true = IMCG_df['PARTTYPE'].isin(attr_df['PARTTYPE']).value_counts()
+
+Attr_true = attr_df['PARTTYPE'].isin(IMCG_df['PARTTYPE']).value_counts()
+
+#%%
+print(
+    f"IMCG part types in GNS:\n{IMCG_true}\n\n"
+    f"GNS part types in IMCG:\n{Attr_true}\n\n"
+    )
+# %%
+IMCG_df['IsinGNS?'] = np.where(IMCG_df['seniority'] == True, 'senior', 'Non-senior')
+
+newDF['IsinGNS?'] = IMCG_df['PARTTYPE'].isin(attr_df['PARTTYPE'])
+
+# %%
+newDF['IsinGNS?'].value_counts()
+
+# %%
+IMCG_df['hasPT?'] = np.where(IMCG_df['PARTTYPE'] == attr_df['PARTTYPE'])
+# df['hasimage'] = np.where(df['photos']!= '[]', True, False)
+IMCG_df['hasPT?']
+
+# %%
+# join DF
+merged = pd.merge(attr_df,IMCG_df,how="outer", on="PARTTYPE")
+merged
+merged.to_csv('data\merged.csv')
+# %%
+IMCG_df['hasPT?'] = np.where(IMCG_df['PARTTYPE'] == attr_df['PARTTYPE'])
+# df['hasimage'] = np.where(df['photos']!= '[]', True, False)
+IMCG_df['hasPT?']
+
+# %%
+# count unique values in part type column of IMCG
+IMCG_df.PARTTYPES.value_counts()
+# %%
+c = IMCG_df.groupby('PARTTYPE').nunique()
+c
+# %%
