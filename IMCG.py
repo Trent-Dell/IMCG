@@ -68,33 +68,61 @@ print(
     f"IMCG part types in GNS:\n{IMCG_true}\n\n"
     f"GNS part types in IMCG:\n{Attr_true}\n\n"
     )
-# %%
-IMCG_df['IsinGNS?'] = np.where(IMCG_df['seniority'] == True, 'senior', 'Non-senior')
-
-newDF['IsinGNS?'] = IMCG_df['PARTTYPE'].isin(attr_df['PARTTYPE'])
-
-# %%
-newDF['IsinGNS?'].value_counts()
-
-# %%
-IMCG_df['hasPT?'] = np.where(IMCG_df['PARTTYPE'] == attr_df['PARTTYPE'])
-# df['hasimage'] = np.where(df['photos']!= '[]', True, False)
-IMCG_df['hasPT?']
 
 # %%
 # join DF
 merged = pd.merge(attr_df,IMCG_df,how="outer", on="PARTTYPE")
 merged
 merged.to_csv('data\merged.csv')
+    
 # %%
-IMCG_df['hasPT?'] = np.where(IMCG_df['PARTTYPE'] == attr_df['PARTTYPE'])
-# df['hasimage'] = np.where(df['photos']!= '[]', True, False)
-IMCG_df['hasPT?']
+# list where CPT or CPC or GCS is null
+# >>> df.iloc[df[(df.isnull().sum(axis=1) >=qty_of_nuls)].index]
+mergedNulls = merged.iloc[merged[(merged.isnull().sum(axis=1) >=0)].index]
+mergedNulls
+#%%
+CPT_nulls = merged[merged['CombinedPartType'].isnull().tolist()]
+CPT_nulls
+# %%
+CPC_nulls = merged[merged['CombinedPartClass'].isnull().tolist()]
+CPC_nulls
+
+#%%
+GCS_nulls = merged[merged['GCS'].isnull().tolist()]
+GCS_nulls
+
+#%%
+CPT_nulls.to_csv('data\CPT_Nulls.csv')
+CPC_nulls.to_csv('data\CPC_Nulls.csv')
+GCS_nulls.to_csv('data\GCS_Nulls.csv')
 
 # %%
-# count unique values in part type column of IMCG
-IMCG_df.PARTTYPES.value_counts()
+IMCG_PT = IMCG_df.groupby('PARTTYPE').nunique()
+IMCG_PT
+
 # %%
-c = IMCG_df.groupby('PARTTYPE').nunique()
-c
+attr_PT = attr_df.groupby('PARTTYPE').nunique()
+attr_PT
+
+# %%
+attr_PT.dtypes
+# %%
+attr_PT.PARTTYPE.value_counts()
+# %%
+IMCG_PT.PARTTYPE.value_counts()
+# %%
+notin = IMCG_df.PARTTYPE.isin(attr_df.PARTTYPE).value_counts()
+
+# %%
+attr_df.PARTTYPE.isin(IMCG_df.PARTTYPE).value_counts()
+# %%
+merge = IMCG_df.merge(attr_df, how='left', indicator = True)
+merge
+
+#%%
+merge[merge['_merge']=='left_only']
+
+# %%
+merged['_merge'].to_list
+
 # %%
